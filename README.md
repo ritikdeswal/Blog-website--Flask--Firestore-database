@@ -1,6 +1,8 @@
 # Blog-website--Flask--Firestore-database
 
-This web app was created in **HTML ,CSS ,Javascript ,Python ,Flask** which stores images in **Firebase storage** then puts the image URL in **Firestore Database** along with the blog contents.
+This web app was created in **HTML ,CSS ,Javascript ,Python ,Flask** 
+which stores images in **Firebase storage** 
+then puts the image URL in **Firestore Database** along with the blog contents.
 This app was deployed on **Digital Ocean** cloud server using **Nginx and gunicorn**
 ```bash
 scorpion-tech.co
