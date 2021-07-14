@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+    pre>b, h2 {
+    color: rgb(255, 58, 67);
+}
+</style>
+    <div class="d-flex flex-row" id="main">
+        <section class="d-flex flex-wrap" id="blog-main" style="/*height: 100px;*//*background: var(--gray);*/">
+            <div class="image-container-blog"><img src="{{blog.image}}" style="width:100%;"></div>
+            <p id="blog-title"><br><strong>{{blog.title}}</strong><br></p>
+            <hr class="hr" style="/*background: var(--gray);*/">
+            <div class="d-lg-flex author-div"><img class="dp" src="static/img/dp.jpg">
+                <div class="d-flex"><span class="author"><strong>Ritik Deswal</strong></span><span class="author2">published on {{blog.date}}</span></div>
+            </div>
+            <hr class="hr" style="/*background: var(--gray);*/">
+            
+            <pre style="color: var(--txtclr);font-family: 'Josefin Sans';font-size: 20px;        text-align: justify;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;">
+            {{blog.article|safe}}
+
+            <div id="additional-images">
+            {% for images in blog.image2 %}
+            <img src="{{images}}" loading="lazy">
+            {% endfor %}
+            </div>
+</pre>
+
+        </section>
+    </div>
+
+{% endblock %}

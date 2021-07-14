@@ -1,0 +1,219 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="d-flex flex-row" id="main">
+    <section id="left" style="/*height: 123px;*/">
+        <div style="margin: 8px;font-size: 22px;">
+            <p>Navigate to&nbsp;</p>
+        </div>
+        <div>
+            <div id="row1" style="display: flex;justify-content: space-around;align-items: baseline;user-select:none;">
+                <div class="calendarbtn" onclick="prev_year()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+                        <path d="M18.3639 7.75735L16.9497 6.34314L11.2929 12L16.9497 17.6568L18.3639 16.2426L14.1213 12L18.3639 7.75735Z" fill="currentColor"></path>
+                        <path d="M11.2929 6.34314L12.7071 7.75735L8.46447 12L12.7071 16.2426L11.2929 17.6568L5.63605 12L11.2929 6.34314Z" fill="currentColor"></path>
+                    </svg></div>
+                <div class="calendarbtn" onclick="prev_month()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+                        <path d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z" fill="currentColor"></path>
+                    </svg></div>
+                <div><span id="month"></span> <span id="year"></span></div>
+                <div class="calendarbtn" onclick="next_month()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+                        <path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor"></path>
+                    </svg></div>
+                <div class="calendarbtn" onclick="next_year()"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+                        <path d="M5.63605 7.75735L7.05026 6.34314L12.7071 12L7.05029 17.6568L5.63608 16.2426L9.87869 12L5.63605 7.75735Z" fill="currentColor"></path>
+                        <path d="M12.7071 6.34314L11.2929 7.75735L15.5356 12L11.2929 16.2426L12.7072 17.6568L18.364 12L12.7071 6.34314Z" fill="currentColor"></path>
+                    </svg></div>
+            </div>
+            <br>
+            <div id="row2" style="user-select:none;">
+                <div id="heading" style="display: flex;justify-content: space-around;font-weight: bold;margin-bottom:15px"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><SPAN>F</SPAN><SPAN>S</SPAN></div>
+                <table id="table" style="width:100%;">
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="d-flex flex-wrap" id="mid" style="/*height: 100px;*//*background: var(--gray);*/">
+        {% for blog in paginate %}
+
+        <article class="articles" style="/*width: 50%;*/">
+            <div class="image-container"><a href="/{{blog.title}}" style="text-decoration: none;">
+                    <img src="{{blog.image}}" loading="lazy" style="width:105%;"></div>
+            <p class="heading" style="/*margin-bottom: 3px;*/font-weight: bold;">{{blog.title}}</p></a><em class="blog-date">{{blog.date}}</em>
+        </article>
+        {% endfor%}
+        <!-- <button class="load-btn" id="load-btn" onclick="loadmore()">Load More</button> -->
+
+    </section></div>
+
+    <div style="width: 100%;">
+         <ul class="pagination justify-content-center" style="margin-top: 60px;">
+    <!-- <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li> -->
+        {% for n in range(1,total_pages+1) if not n>=10 %}
+
+        <li class="page-item"><a class="page-no" href="/?page={{n}}">{{n}}</a></li>
+
+        {% endfor %}
+        
+      </ul>
+</div>
+
+
+
+{% endblock %}
+{% block script %}
+
+<script type="text/javascript">
+var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+var blogDates=["2021-06-19","26-6-2021","12-7-2021"]
+var blogDates = {{ blogDate|safe }} 
+var blogDates = [];
+var blogTitle = []; 
+{% for blog in blogall %}
+    blogDates.push('{{ blog.date | safe}}');
+    blogTitle.push('{{ blog.title | safe}}') ;
+{% endfor %}
+
+const d = new Date();
+curr_month = d.getMonth();
+curr_year = d.getFullYear();
+const d2 = new Date(curr_year, curr_month, 1);
+month_start = d2.getDay();
+
+document.getElementById("year").innerHTML = curr_year;
+document.getElementById("month").innerHTML = month[curr_month];
+
+
+function prev_month() {
+    if (curr_month == 0) {
+        curr_month = 12;
+        curr_year = curr_year - 1
+    }
+    curr_month = curr_month - 1;
+    document.getElementById("month").innerHTML = month[curr_month];
+    document.getElementById("year").innerHTML = curr_year;
+    fetch_day();
+}
+
+function next_month() {
+    if (curr_month == 11) {
+        curr_month = -1;
+        curr_year = curr_year + 1;
+
+    }
+    curr_month = curr_month + 1;
+    document.getElementById("month").innerHTML = month[curr_month];
+    document.getElementById("year").innerHTML = curr_year;
+    fetch_day();
+}
+
+function prev_year() {
+    curr_year = curr_year - 1;
+    document.getElementById("year").innerHTML = curr_year;
+    fetch_day();
+}
+
+function next_year() {
+    curr_year = curr_year + 1;
+    document.getElementById("year").innerHTML = curr_year;
+    fetch_day();
+}
+
+function fetch_day() {
+    //fetch the starting day of the week
+    dd = new Date(curr_year, curr_month, 1);
+    month_start = dd.getDay();
+    // table=document.getElementById("tbody");
+    updateDay();
+}
+
+updateDay();
+
+function updateDay() {
+    table = document.getElementById("tbody");
+
+    //remove all the data of current month
+    while (table.hasChildNodes()) {
+        table.removeChild(table.firstChild);
+    }
+
+    //create empty spaces before first date
+    tr = document.createElement("tr");
+    let c = 0;
+    while (c < month_start) {
+        td = document.createElement("td");
+        td.innerHTML = "";
+        tr.appendChild(td);
+        c = c + 1;
+    }
+
+    //remaining dates in row 1
+    count = 1;
+    while (c <= 6) {
+        td2 = document.createElement("td");
+        // mm=curr_month+1;
+        mm = ("0" + (curr_month + 1)).slice(-2);
+        date = ("0" + count).slice(-2);
+        td2.setAttribute("id", curr_year + '-' + mm + "-" + date);
+        td2.innerHTML = count;
+        tr.appendChild(td2);
+        count = count + 1;
+        c = c + 1;
+        if (blogDates.includes(td2.id)) {
+            var blogtooltip = blogTitle[blogDates.indexOf(td2.id)];
+            td2.setAttribute("class", "dateHighlight");
+            tooltip = document.createElement("div");
+            tooltip.setAttribute("class", "tooltip-hidden");
+            tooltip.innerHTML = blogtooltip;
+            td2.appendChild(tooltip);
+            str1 = "location.href='/";
+            res = str1.concat(blogtooltip).concat("'");
+            td2.setAttribute("onclick", res);
+
+        }
+    }
+    table.appendChild(tr);
+
+
+    // remainng dates in all rows
+    for (r = 2; r <= 6; r = r + 1) {
+
+        tr2 = document.createElement("tr");
+        for (c = 0; c <= 6; c = c + 1) {
+            td3 = document.createElement('td');
+            mm = ("0" + (curr_month + 1)).slice(-2);
+            date = ("0" + count).slice(-2);
+            td3.setAttribute("id", curr_year + '-' + mm + "-" +date );
+            td3.innerHTML = count;
+            count = count + 1;
+            dd2 = new Date(curr_year, curr_month + 1, 0).getDate();
+            if (count > dd2 + 1) {
+                break;
+            }
+            tr2.appendChild(td3);
+            if (blogDates.includes(td3.id)) {
+                var blogtooltip = blogTitle[blogDates.indexOf(td3.id)];
+                td3.setAttribute("class", "dateHighlight");
+
+                tooltip = document.createElement("div");
+                tooltip.setAttribute("class", "tooltip-hidden");
+                tooltip.innerHTML = blogtooltip;
+                td3.appendChild(tooltip);
+
+                str1 = "location.href='/";
+                res = str1.concat(blogtooltip).concat("'");
+                td3.setAttribute("onclick", res);
+
+            }
+        }
+
+        table.appendChild(tr2);
+    }
+
+}
+</script>
+
+{% endblock %}

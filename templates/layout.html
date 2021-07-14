@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    {% if title%}
+    <title>Scorpion Tech - {{title}}</title>
+    {% else %}
+    <title>Scorpion Tech</title>
+    {% endif %}
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" href="static/favicon.png" type="image/png" sizes="16x16">
+</head>
+
+<body class="d-flex flex-column justify-content-between" style="color: var(--light);background: var(--bgclr);">
+    <div class="justify-content-center" id="bg" style="/*background: rgb(220, 53, 69);*//*padding: 5px;*/">
+        <div class="d-flex flex-column mx-auto" id="column" style="/*max-width: 68%;*/">
+            <div class="d-flex justify-content-between align-items-center" id="row1" style="margin-top: 5px;"><span id="blog-name" style="/*font-size: 28px;*/padding: 0px;margin: 0px;margin-top: 12px;margin-bottom: 5px;font-family: Ubuntu, sans-serif;font-weight: bold;font-style: normal;font-family: 'Josefin Sans', sans-serif;">Scorpion - Tech</span>
+                
+                <div id="search-container" ><input type="text" id="search-input"  placeholder="enter keywords to search" onkeyup="searching()"><span
+    style="position: absolute;
+    padding-right: 15px;
+    right: 0;"><i class="fa fa-times" aria-hidden="true" style="margin-top: 8px;" onclick="document.getElementById('search-container').style.display='none';"></i></span>
+
+                <div id="search-output" >
+                    <ul id="listOfResults">
+                      
+                    </ul>
+                </div>
+                </div>
+                <span style="font-size: 26px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" data-toggle="tooltip" data-bss-tooltip="" data-placement="bottom" id="search" class="bg-circle" style="/*margin-right: 25px;*/" title="Search blogs" onclick="toggleSearch()">
+                        
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.319 14.4326C20.7628 11.2941 20.542 6.75347 17.6569 3.86829C14.5327 0.744098 9.46734 0.744098 6.34315 3.86829C3.21895 6.99249 3.21895 12.0578 6.34315 15.182C9.22833 18.0672 13.769 18.2879 16.9075 15.8442C16.921 15.8595 16.9351 15.8745 16.9497 15.8891L21.1924 20.1317C21.5829 20.5223 22.2161 20.5223 22.6066 20.1317C22.9971 19.7412 22.9971 19.1081 22.6066 18.7175L18.364 14.4749C18.3493 14.4603 18.3343 14.4462 18.319 14.4326ZM16.2426 5.28251C18.5858 7.62565 18.5858 11.4246 16.2426 13.7678C13.8995 16.1109 10.1005 16.1109 7.75736 13.7678C5.41421 11.4246 5.41421 7.62565 7.75736 5.28251C10.1005 2.93936 13.8995 2.93936 16.2426 5.28251Z" fill="currentColor"></path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" data-toggle="tooltip" data-bss-tooltip="" data-placement="bottom" id="dark-mode" class="bg-circle" title="Toggle Dark Mode" name="dark" onclick="changeit(this)">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z" fill="currentColor"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11 0H13V4.06189C12.6724 4.02104 12.3387 4 12 4C11.6613 4 11.3276 4.02104 11 4.06189V0ZM7.0943 5.68018L4.22173 2.80761L2.80752 4.22183L5.6801 7.09441C6.09071 6.56618 6.56608 6.0908 7.0943 5.68018ZM4.06189 11H0V13H4.06189C4.02104 12.6724 4 12.3387 4 12C4 11.6613 4.02104 11.3276 4.06189 11ZM5.6801 16.9056L2.80751 19.7782L4.22173 21.1924L7.0943 18.3198C6.56608 17.9092 6.09071 17.4338 5.6801 16.9056ZM11 19.9381V24H13V19.9381C12.6724 19.979 12.3387 20 12 20C11.6613 20 11.3276 19.979 11 19.9381ZM16.9056 18.3199L19.7781 21.1924L21.1923 19.7782L18.3198 16.9057C17.9092 17.4339 17.4338 17.9093 16.9056 18.3199ZM19.9381 13H24V11H19.9381C19.979 11.3276 20 11.6613 20 12C20 12.3387 19.979 12.6724 19.9381 13ZM18.3198 7.0943L21.1923 4.22183L19.7781 2.80762L16.9056 5.6801C17.4338 6.09071 17.9092 6.56608 18.3198 7.0943Z" fill="currentColor"></path>
+                    </svg></span></div>
+            <div class="text-uppercase d-flex justify-content-between align-items-lg-center" id="row2" style="margin: 0px;margin-top: 20px;margin-bottom: 7px;">
+                <div id="pages"><span class="links-all"><a class="a-links" href="/" >Home</a></span><span class="links-all"><a class="a-links" href="/projects">projects</a></span><span class="links-all"><a class="a-links" href="/designs">designs</a></span></div>
+                <div class="d-lg-flex align-items-lg-end" id="social-links"><a class="bg-circle s-links" href="https://www.instagram.com/scorpion_graphic/" target="_blank"><i class="fa fa-instagram" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://www.linkedin.com/in/ritikdeswal77/" target="_blank"><i class="fa fa-linkedin" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://www.facebook.com/ritik.deswal.77/" target="_blank"><i class="fa fa-facebook" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://github.com/ritikdeswal"><i class="fa fa-github" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://www.youtube.com/channel/UCMJLCgL0f4z8a-_P2eRmovQ" target="_blank"><i class="fa fa-youtube-play" style="font-size: 24px;"></i></a></div>
+            </div>
+        </div>
+    </div>
+
+{% block body %} {% endblock %}
+
+<footer style="width: 100%;/*height: 100px;*/background: var(--footerclr);margin-top: 65px;padding: 20px;">
+        <div style="padding: 0;">
+            <p>©&nbsp; 2021 Scorpion-Tech</p>
+        </div>
+        <div>
+            <p><a href="/privacy" >Privacy Policy</a></p>
+        </div>
+        <div class="d-lg-flex align-items-lg-end" id="social-links"><a class="bg-circle s-links" href="https://www.instagram.com/scorpion_graphic/" target="_blank"><i class="fa fa-instagram" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://www.linkedin.com/in/ritikdeswal77/" target="_blank"><i class="fa fa-linkedin" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://www.facebook.com/ritik.deswal.77/" target="_blank"><i class="fa fa-facebook" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://github.com/ritikdeswal"><i class="fa fa-github" style="font-size: 24px;"></i></a><a class="bg-circle s-links" href="https://www.youtube.com/channel/UCMJLCgL0f4z8a-_P2eRmovQ" target="_blank"><i class="fa fa-youtube-play" style="font-size: 24px;"></i></a></div>
+    </footer>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/js/bs-init.js"></script>
+    <script type="text/javascript">
+        
+        function toggleSearch() {
+            inputarea=document.getElementById('search-container');
+            if (inputarea.style.display=='block'){
+                inputarea.style.display='none';
+            }
+            else {inputarea.style.display='block';
+
+            }
+
+            document.getElementById('search-output').style.display='none';
+
+        }
+
+        var blogDates = [];
+        var blogTitle = []; 
+        {% for blog in blogall %}
+            blogDates.push('{{ blog.date | safe}}');
+            blogTitle.push('{{ blog.title | safe}}') ;
+        {% endfor %}
+    
+    // search box
+    function searching() {
+        document.getElementById('search-output').style.display='revert';
+    input = document.getElementById("search-input");
+    input2 = input.value.toUpperCase();
+
+    ull=document.getElementById("listOfResults");
+      ull.innerHTML="";
+      for (j=0;j<blogTitle.length;j++){
+        if (blogTitle[j].toUpperCase().indexOf(input2) >-1){
+          console.log(blogTitle[j]);
+          li=document.createElement("li");
+          li.innerHTML="<a href='"+blogTitle[j]+"' style='text-decoration: none;color:var(--txtclr);'>"+blogTitle[j]+"</a>";
+        ull.appendChild(li);
+        }
+      }
+      if (input.value==''){
+        document.getElementById('search-output').style.display='none';
+      }
+}
+
+    </script>
+    {% block script %} {% endblock %}
+    <script src="static/js/theme.js"></script>
+</body>
+
+</html>

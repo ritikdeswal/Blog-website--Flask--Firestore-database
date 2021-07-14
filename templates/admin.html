@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="text-justify" id="main" style="color:var(--txtclr);">
+    <div class="text-uppercase d-flex justify-content-between align-items-lg-center" id="row2" style="margin: 0px;margin-top: 20px;margin-bottom: 30px;">
+        <div><span class="links-all"><a class="a-links" onclick="view()" style="color:var(--txtclr);">view</a></span><span class="links-all"><a class="a-links" onclick="create()" style="color:var(--txtclr);">create</a></span><span> <button onclick="window.location='/dropsession'" class="load-btn" style="margin-top:0px;">logout</button></span></div>
+    </div>
+
+    <!-- form begins -->
+    <div class="form-container">
+        <form id="insert_db" action="/dashboard" method="post"  enctype="multipart/form-data" style="display: none;">
+            <input type="hidden" id="formtype" name="formtype" value="creator">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Title</label>
+                <input type="text" class="form-control" name="title" aria-describedby="emailHelp" placeholder="Enter title" required>
+            </div>
+            <div class="form-group">
+                <label>Article</label>
+                <textarea type="textarea" class="form-control " name="article" placeholder="article" height="100px" required></textarea>
+                <small id="emailHelp" class="form-text text-muted">You have to add html elements</small>
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="text" class="form-control" name="date" placeholder="date" required>
+                <small id="emailHelp" class="form-text text-muted">format:YYYY-MM-DD , example:2021-02-03</small>
+            </div>
+            <div class="form-group">
+                <label>Main Image</label>
+                <input type="file" class="form-control" name="image"  max-size="1024" required>
+            </div>
+            <div class="form-group">
+                <label>Additional Image(s)</label>
+                <input type="file" class="form-control" name="image2"  multiple max-size="1024">
+            </div>
+            <button type="submit" class="load-btn" style="margin-top15px">Submit</button>
+        </form>
+    </div>
+
+    
+    <!-- view table begins  -->
+
+
+    <table class="table2" id="view_db" style="color:var(--txtclr);width: 100%;">
+    <tr style="text-align: center;">
+      
+      <th >Title</th>
+      <th >Date</th>
+      <th >Action</th>
+    </tr>
+
+    {% for blog in blogall%}
+    <tr>
+   
+      <td>{{blog.title}}</td>
+  <td>{{blog.date}}</td>
+      <td><a href="/delete/{{ blog.date }}" onclick="return confirm('Are you sure?')">delete</a></td>
+    </tr>
+    {% endfor %}
+
+</table>
+</div>
+<script type="text/javascript">
+view_all = document.getElementById('view_db');
+create_new = document.getElementById('insert_db');
+
+function view() {
+    view_all.style.display = "revert";
+    create_new.style.display = "none";
+}
+
+function create() {
+    view_all.style.display = "none";
+    create_new.style.display = "block";
+}
+</script>
+{% endblock %}
